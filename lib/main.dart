@@ -7,6 +7,10 @@ void main() {
   runApp(MyApp());
 }
 
+final String X = "X";
+final String O = "O";
+final MaterialColor cyan = Colors.cyan;
+
 class MyApp extends StatelessWidget {
 
   @override
@@ -24,7 +28,7 @@ class MyApp extends StatelessWidget {
     return AppBar(
       title: Text("TicTacToe", style: TextStyle(fontSize: 30),),
       centerTitle: true,
-      backgroundColor: Colors.cyan,
+      backgroundColor: cyan,
     );
   }
 
@@ -61,28 +65,28 @@ Widget getEnterNameWidget(int num, TextEditingController textEditingController, 
                   children: <Widget>[
                       Text (
                         "Player $num",
-                        style: TextStyle(color: Colors.cyan, fontSize: 20),
+                        style: TextStyle(color: cyan, fontSize: 20),
                       ),
                       SizedBox(height: 10,),
                       TextFormField(
                         decoration: InputDecoration(
                           hintText: "Enter Name",
-                          hintStyle: TextStyle(fontSize: 15, color: Colors.cyan),
+                          hintStyle: TextStyle(fontSize: 15, color: cyan),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide(color: Colors.cyan),
+                            borderSide: BorderSide(color: cyan),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide(color: Colors.cyan),
+                            borderSide: BorderSide(color: cyan),
                           ),
                         ),
-                        style: TextStyle(fontSize: 25, color: Colors.cyan),
+                        style: TextStyle(fontSize: 25, color: cyan),
                         controller: textEditingController,
                       ),
                       SizedBox(height: 10,),
                       RaisedButton(
-                        color: Colors.cyan,
+                        color: cyan,
                         child: Text("Go", style: TextStyle(color: Colors.white, fontSize: 20,),),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)
@@ -167,7 +171,7 @@ class _GameAreaState extends State<GameArea> {
                   child: Padding(
                     padding: EdgeInsets.all(10),
                     child: RaisedButton(
-                      color: Colors.cyan,
+                      color: cyan,
                       onPressed: (){
                         setState(() {
                           gameData.reset(playerInfo);
@@ -202,7 +206,7 @@ class _GameAreaState extends State<GameArea> {
                       doGameMove(gameData, rowNum, i, playerInfo);
                       var win = checkForWinner(gameData, playerInfo);
                       setState(() {
-                        if (win != "") {
+                        if (win.isNotEmpty) {
                           gameData.gameStatus = "complete";
                           gameData.reset(playerInfo);
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Alert(msg: win,)));
@@ -222,10 +226,10 @@ class _GameAreaState extends State<GameArea> {
     setState(() {
       if (gameData.grid[r][c] == "" && gameData.gameStatus != "complete") {
         if (gameData.currentPlayer == playerInfo.player1) {
-          gameData.grid[r][c] = "X";
+          gameData.grid[r][c] = X;
           gameData.currentPlayer = playerInfo.player2;
         } else {
-          gameData.grid[r][c] = "O";
+          gameData.grid[r][c] = O;
           gameData.currentPlayer = playerInfo.player1;
         }
       }
@@ -234,30 +238,31 @@ class _GameAreaState extends State<GameArea> {
 
   String checkForWinner(GameData gameData, PlayerInfo playerInfo) {
     var grid = gameData.grid;
+    String data;
     //first check for rows
     for (var i=0; i<3; i++) {
-      var data = grid[i][0];
-      if (data != "" && grid[i][1] == data && grid[i][2] == data) {
-        return data == "X" ? "${playerInfo.player1} won" : "${playerInfo.player2} won";
+      data = grid[i][0];
+      if (data.isNotEmpty && grid[i][1] == data && grid[i][2] == data) {
+        return data == X ? "${playerInfo.player1} won" : "${playerInfo.player2} won";
       }
     }
 
     //check for columns
     for (var i=0; i<3; i++) {
-      var data = grid[0][i];
-      if (data != "" && grid[1][i] == data && grid[2][i] == data) {
-        return data == "X" ? "${playerInfo.player1} won" : "${playerInfo.player2} won";
+      data = grid[0][i];
+      if (data.isNotEmpty && grid[1][i] == data && grid[2][i] == data) {
+        return data == X ? "${playerInfo.player1} won" : "${playerInfo.player2} won";
       }
     }
 
-    var data = grid[0][0];
-    if (data != "" && grid[1][1] == data && grid[2][2] == data) {
-      return data == "X" ? "${playerInfo.player1} won" : "${playerInfo.player2} won";
+    data = grid[0][0];
+    if (data.isNotEmpty && grid[1][1] == data && grid[2][2] == data) {
+      return data == X ? "${playerInfo.player1} won" : "${playerInfo.player2} won";
     }
 
     data = grid[0][2];
-    if (data != "" && grid[1][1] == data && grid[2][0] == data) {
-      return data == "X" ? "${playerInfo.player1} won" : "${playerInfo.player2} won";
+    if (data.isNotEmpty && grid[1][1] == data && grid[2][0] == data) {
+      return data == X ? "${playerInfo.player1} won" : "${playerInfo.player2} won";
     }
 
     var isAnyCellEmpty = false;
@@ -312,11 +317,11 @@ class Alert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Game over!', style: TextStyle(color: Colors.cyan),),
+      title: Text('Game over!', style: TextStyle(color: cyan),),
       content: Text(msg, style: TextStyle(fontSize: 20),),
       actions: <Widget>[
         FlatButton(
-          child: Text('OK', style: TextStyle(fontSize: 20, color: Colors.cyan),),
+          child: Text('OK', style: TextStyle(fontSize: 20, color: cyan),),
           onPressed: () {
             Navigator.of(context).pop();
           },
