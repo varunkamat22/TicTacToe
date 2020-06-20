@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -209,6 +211,8 @@ class _GameAreaState extends State<GameArea> {
                         if (win.isNotEmpty) {
                           gameData.gameStatus = "complete";
                           gameData.reset(playerInfo);
+                          var audioCache = AudioCache();
+                          audioCache.play("audio/gong.wav");
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Alert(msg: win,)));
                         }
                       });
