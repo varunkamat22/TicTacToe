@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
 
   static PreferredSizeWidget getAppBar() {
     return AppBar(
-      title: Text("TicTacToe", style: TextStyle(fontSize: 20,),),
+      title: Text("TicTacToe", style: TextStyle(fontSize: 30),),
+      centerTitle: true,
       backgroundColor: Colors.cyan,
     );
   }
